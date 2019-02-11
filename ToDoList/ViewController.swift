@@ -14,14 +14,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var editBarButton: UIBarButtonItem!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    var toDoArray = ["Learn Swift", "Build Apps", "Change the World"]
-    var toDoNotesArray = ["I should be certain to do all the exercises at the end of chapters before the exam", "Take my ideas to the school's venture competition and win the big check", "Focus apps on empowerment for all, with an extra bonus for users who are kind"]
+//    var toDoArray = ["Learn Swift", "Build Apps", "Change the World"]
+//    var toDoNotesArray = ["I should be certain to do all the exercises at the end of chapters before the exam", "Take my ideas to the school's venture competition and win the big check", "Focus apps on empowerment for all, with an extra bonus for users who are kind"]
+//
+    var toDoArray = [String]()
+    var toDoNotesArray = [String]()
+    var defaultsData = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        toDoArray = defaultsData.stringArray(forKey: "toDoArray") ?? [String]()
+        toDoNotesArray = defaultsData.stringArray(forKey: "toDoNotesArray") ?? [String]()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    func saveDefaultsData(){
+        defaultsData.set(toDoArray, forKey: "toDoArray")
+        defaultsData.set(toDoNotesArray, forKey: "toDoNotesArray")
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -51,7 +61,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func editBarButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction func editBarButtonPressed(_ sender: Any) {
         if tableView.isEditing{
             tableView.setEditing(false, animated: true)
             editBarButton.title = "Edit"
@@ -63,8 +73,8 @@ class ViewController: UIViewController {
         }
         
     }
+    }
     
-}
 
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -82,6 +92,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             toDoArray.remove(at: indexPath.row)
             toDoNotesArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveDefaultsData()
         }
     }
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -91,5 +102,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         toDoNotesArray.remove(at: sourceIndexPath.row)
         toDoArray.insert(itemToMove, at: destinationIndexPath.row)
         toDoNotesArray.insert(noteItemToMove, at: destinationIndexPath.row)
+        saveDefaultsData()
     }
 }

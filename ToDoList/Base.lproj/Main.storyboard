@@ -41,11 +41,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="To Do List" id="ifp-GU-MUP">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="9sY-pS-T2z">
-                            <connections>
-                                <action selector="editBarButtonPressed:" destination="BYZ-38-t0r" id="RNO-uh-I4B"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="9sY-pS-T2z"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="qjn-zf-nln">
                             <connections>
                                 <segue destination="heC-Ls-Uao" kind="presentation" identifier="AddItem" id="nlk-eh-wZT"/>
@@ -82,7 +78,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                <connections>
+                                    <action selector="toDoFieldChanged:" destination="XaB-hm-FfW" eventType="editingChanged" id="bur-jf-NyI"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -101,6 +100,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="saveBarButton" destination="u0S-Qc-Noo" id="cgP-K4-kdO"/>
                         <outlet property="toDoField" destination="6bV-Lm-sox" id="Q9w-z0-xep"/>
                     </connections>
                 </viewController>
